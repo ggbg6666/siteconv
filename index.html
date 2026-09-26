@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal Room</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Écran de connexion / inscription, style "ancien Discord" -->
+<div class="auth" id="authScreen">
+  <div class="auth__card">
+    <h1 id="authTitle">Content de te revoir !</h1>
+    <p class="auth__subtitle" id="authSubtitle">Nous sommes ravis de te revoir.</p>
+
+    <form id="authForm">
+      <div class="auth__field">
+        <label>Pseudo</label>
+        <input type="text" id="usernameInput" required minlength="4" maxlength="24" placeholder="Ton pseudo (4 caractères min.)" autocomplete="username">
+      </div>
+      <div class="auth__field">
+        <label>Mot de passe</label>
+        <input type="password" id="passwordInput" required minlength="6" placeholder="6 caractères minimum" autocomplete="current-password">
+      </div>
+      <button type="submit" class="auth__submit" id="authSubmit">Se connecter</button>
+      <p class="auth__error" id="authError"></p>
+      <p class="auth__hint" id="authHint"></p>
+      <p class="auth__switch">
+        <span id="switchText">Besoin d'un compte ?</span>
+        <a href="#" id="switchLink">Inscription</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<div class="app is-hidden" id="app">
+
+  <!-- Bouton mobile pour ouvrir la liste des canaux -->
+  <button class="mobile-toggle mobile-toggle--left" id="openChannels" aria-label="Ouvrir les canaux">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <!-- Overlay mobile -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Rail des serveurs -->
+  <nav class="rail" id="rail">
+    <div class="rail__item rail__item--home is-active" data-tooltip="Accueil">
+      <span>SR</span>
+    </div>
+    <div class="rail__sep"></div>
+    <div class="rail__servers" id="railServers"></div>
+    <div class="rail__item rail__item--add" data-tooltip="Ajouter un serveur">+</div>
+  </nav>
+
+  <!-- Colonne des canaux -->
+  <aside class="channels" id="channels">
+    <header class="channels__header">
+      <h1 id="serverName">Le Repaire</h1>
+      <button class="icon-btn only-mobile" id="closeChannels" aria-label="Fermer">✕</button>
+    </header>
+
+    <div class="channels__list" id="channelList"></div>
+
+    <div class="channels__list channels__list--dm" id="dmList">
+      <div class="channels__label">Messages privés</div>
+    </div>
+
+    <footer class="user-bar">
+      <div class="user-bar__avatar" id="myAvatar">U</div>
+      <div class="user-bar__info">
+        <div class="user-bar__name" id="myName">Toi</div>
+        <div class="user-bar__status">En ligne</div>
+      </div>
+      <button class="icon-btn" id="settingsBtn" aria-label="Paramètres">⚙</button>
+    </footer>
+  </aside>
+
+  <!-- Zone principale de chat -->
+  <main class="chat">
+    <header class="chat__header">
+      <span class="chat__hash">#</span>
+      <h2 id="channelName">général</h2>
+      <span class="chat__topic" id="channelTopic">Discussion générale</span>
+
+      <div class="chat__header-actions">
+        <button class="icon-btn only-mobile" id="openMembers" aria-label="Membres">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 11a4 4 0 1 0-4-4M6 21v-1a4 4 0 0 1 4-4h1m8 5v-1a4 4 0 0 0-3-3.87M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="chat__messages" id="messages"></div>
+
+    <div class="typing" id="typingIndicator"></div>
+
+    <form class="composer" id="composerForm">
+      <button type="button" class="composer__plus" aria-label="Ajouter">+</button>
+      <input type="text" id="composerInput" placeholder="Écrire dans #général" autocomplete="off" maxlength="1000">
+      <button type="submit" class="composer__send" aria-label="Envoyer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m3 20 18-8L3 4l0 6 13 2-13 2z" fill="currentColor"/></svg>
+      </button>
+    </form>
+  </main>
+
+  <!-- Liste des membres -->
+  <aside class="members" id="members">
+    <header class="members__header">
+      <span>Membres</span>
+      <button class="icon-btn only-mobile" id="closeMembers" aria-label="Fermer">✕</button>
+    </header>
+    <div class="members__list" id="membersList"></div>
+  </aside>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
